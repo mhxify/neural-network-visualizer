@@ -2,6 +2,7 @@ package com.mhxify;
 
 import com.mhxify.neural.Neuron;
 import com.mhxify.neural.SingleNeuronTrainer;
+import com.mhxify.neural.XORData;
 
 public class Main {
 
@@ -31,5 +32,16 @@ public class Main {
         System.out.println("--------------------");
         System.out.println("Final Prediction = " + finalPrediction);
         System.out.println("Expected         = " + expected);
+
+        for (int i = 0; i < XORData.INPUTS.length; i++) {
+
+            System.out.println(
+                    XORData.INPUTS[i][0]
+                            + " XOR "
+                            + XORData.INPUTS[i][1]
+                            + " = "
+                            + XORData.OUTPUTS[i][0]
+            );
+        }
     }
 }
