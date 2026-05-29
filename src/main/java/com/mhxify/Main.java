@@ -1,15 +1,17 @@
 package com.mhxify;
 
-import com.mhxify.neural.Neuron;
+import com.mhxify.neural.Layer;
+
+import java.util.Arrays;
 
 public class Main {
     public static void main(String[] args) {
-        Neuron neuron = new Neuron(2);
+        Layer layer = new Layer(2, 3);
 
         double[] inputs = {1.0, 0.0};
 
-        double result = neuron.forward(inputs);
+        double[] outputs = layer.forward(inputs);
 
-        System.out.println("Neuron output = " + result);
+        System.out.println("Layer outputs = " + Arrays.toString(outputs));
     }
 }
