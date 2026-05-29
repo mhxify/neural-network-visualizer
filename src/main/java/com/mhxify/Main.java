@@ -1,5 +1,6 @@
 package com.mhxify;
 
+import com.mhxify.neural.GradientDescent;
 import com.mhxify.neural.Layer;
 import com.mhxify.neural.LossFunction;
 import com.mhxify.neural.NeuralNetwork;
@@ -42,5 +43,16 @@ public class Main {
         System.out.println("Expected    = " + expected);
         System.out.println("Predicted   = " + predicted);
         System.out.println("Loss        = " + loss);
+
+        double weight = 0.5;
+
+        double updated =
+                GradientDescent.updateWeight(
+                        weight,
+                        0.2,
+                        0.1
+                );
+
+        System.out.println(updated);
     }
 }
