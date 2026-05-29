@@ -1,7 +1,12 @@
 package com.mhxify.visualizer;
 
+import com.mhxify.neural.Layer;
+import com.mhxify.neural.NetworkTrainer;
+import com.mhxify.neural.NeuralNetwork;
+import com.mhxify.neural.XORData;
 import javafx.application.Application;
 import javafx.scene.Scene;
+import javafx.scene.control.Button;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Line;
@@ -16,12 +21,26 @@ public class VisualizerApp extends Application {
     private final List<NeuronView> hiddenViews = new ArrayList<>();
     private final List<NeuronView> outputViews = new ArrayList<>();
 
+    private NeuralNetwork network;
+    private int currentSampleIndex = 0;
+
     public static void main(String[] args) {
         launch(args);
     }
 
     @Override
     public void start(Stage stage) {
+
+        network = new NeuralNetwork();
+
+        network.addLayer(new Layer(2, 4));
+        network.addLayer(new Layer(4, 1));
+
+        NetworkTrainer.trainXOR(
+                network,
+                0.5,
+                50000
+        );
 
         Pane root = new Pane();
 
@@ -30,7 +49,7 @@ public class VisualizerApp extends Application {
         double outputX = 750;
 
         double[] inputY = {220, 380};
-        double[] hiddenY = {150, 250, 350, 450};
+        double[] hiddenY = {120, 240, 360, 480};
         double[] outputY = {300};
 
         for (double iy : inputY) {
@@ -63,22 +82,49 @@ public class VisualizerApp extends Application {
             root.getChildren().add(view);
         }
 
-        // Test values for now
-        inputViews.get(0).setValue(0.0);
-        inputViews.get(1).setValue(1.0);
+        Button nextButton = new Button("Next XOR Sample");
+        nextButton.setLayoutX(360);
+        nextButton.setLayoutY(540);
 
-        hiddenViews.get(0).setValue(0.72);
-        hiddenViews.get(1).setValue(0.15);
-        hiddenViews.get(2).setValue(0.88);
-        hiddenViews.get(3).setValue(0.32);
+        nextButton.setOnAction(event -> {
+            currentSampleIndex++;
 
-        outputViews.get(0).setValue(0.99);
+            if (currentSampleIndex >= XORData.INPUTS.length) {
+                currentSampleIndex = 0;
+            }
+
+            updateNetworkValues();
+        });
+
+        root.getChildren().add(nextButton);
+
+        updateNetworkValues();
 
         Scene scene = new Scene(root, 900, 600);
 
         stage.setTitle("Neural Network Visualizer");
         stage.setScene(scene);
         stage.show();
+    }
+
+    private void updateNetworkValues() {
+
+        double[] input = XORData.INPUTS[currentSampleIndex];
+
+        double[] output = network.forward(input);
+
+        inputViews.get(0).setValue(input[0]);
+        inputViews.get(1).setValue(input[1]);
+
+        Layer hiddenLayer = network.getLayers().get(0);
+
+        for (int i = 0; i < hiddenLayer.getNeurons().size(); i++) {
+            hiddenViews.get(i).setValue(
+                    hiddenLayer.getNeurons().get(i).getOutput()
+            );
+        }
+
+        outputViews.get(0).setValue(output[0]);
     }
 
     private Line createLine(double startX, double startY, double endX, double endY) {
