@@ -4,8 +4,8 @@ import java.util.Random;
 
 public class Neuron {
 
-    private final double[] weights;
-    private final double bias;
+    private double[] weights;
+    private double bias;
     private double output;
 
     public Neuron(int inputCount) {
@@ -46,5 +46,24 @@ public class Neuron {
 
     public double getOutput() {
         return output;
+    }
+
+    public double[] getWeights() {
+        return weights;
+    }
+
+    public double getBias() {
+        return bias;
+    }
+
+    public void setBias(double bias) {
+        this.bias = bias;
+    }
+
+    public void setWeight(
+            int index,
+            double value
+    ) {
+        weights[index] = value;
     }
 }
