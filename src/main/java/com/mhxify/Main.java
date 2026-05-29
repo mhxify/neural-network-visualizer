@@ -1,46 +1,30 @@
 package com.mhxify;
 
-import com.mhxify.neural.Neuron;
-import com.mhxify.neural.SingleNeuronTrainer;
+import com.mhxify.neural.Layer;
+import com.mhxify.neural.NeuralNetwork;
 import com.mhxify.neural.XORData;
+
+import java.util.Arrays;
 
 public class Main {
 
     public static void main(String[] args) {
 
-        // Create one neuron with one input
-        Neuron neuron = new Neuron(1);
+        NeuralNetwork network = new NeuralNetwork();
 
-        // Training data
-        double[] inputs = {1.0};
-
-        // We want the neuron to output 1.0
-        double expected = 1.0;
-
-        // Train the neuron
-        SingleNeuronTrainer.train(
-                neuron,
-                inputs,
-                expected,
-                0.1,   // learning rate
-                1000   // epochs
-        );
-
-        // Final test
-        double finalPrediction = neuron.forward(inputs);
-
-        System.out.println("--------------------");
-        System.out.println("Final Prediction = " + finalPrediction);
-        System.out.println("Expected         = " + expected);
+        network.addLayer(new Layer(2, 2)); // hidden layer
+        network.addLayer(new Layer(2, 1)); // output layer
 
         for (int i = 0; i < XORData.INPUTS.length; i++) {
 
+            double[] prediction = network.forward(XORData.INPUTS[i]);
+
             System.out.println(
-                    XORData.INPUTS[i][0]
-                            + " XOR "
-                            + XORData.INPUTS[i][1]
-                            + " = "
-                            + XORData.OUTPUTS[i][0]
+                    Arrays.toString(XORData.INPUTS[i])
+                            + " -> predicted: "
+                            + Arrays.toString(prediction)
+                            + " expected: "
+                            + Arrays.toString(XORData.OUTPUTS[i])
             );
         }
     }

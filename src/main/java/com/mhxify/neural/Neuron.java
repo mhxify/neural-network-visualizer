@@ -7,6 +7,8 @@ public class Neuron {
     private double[] weights;
     private double bias;
     private double output;
+    private double[] lastInputs;
+    private double lastWeightedSum;
 
     public Neuron(int inputCount) {
         weights = new double[inputCount];
@@ -20,14 +22,26 @@ public class Neuron {
     }
 
     public double forward(double[] inputs) {
+        this.lastInputs = inputs;
+
         double sum = bias;
 
         for (int i = 0; i < inputs.length; i++) {
             sum += inputs[i] * weights[i];
         }
 
+        this.lastWeightedSum = sum;
         output = sigmoid(sum);
+
         return output;
+    }
+
+    public double[] getLastInputs() {
+        return lastInputs;
+    }
+
+    public double getLastWeightedSum() {
+        return lastWeightedSum;
     }
 
     private double sigmoid(double x) {
