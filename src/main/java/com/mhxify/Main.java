@@ -1,6 +1,7 @@
 package com.mhxify;
 
 import com.mhxify.neural.Layer;
+import com.mhxify.neural.NetworkTrainer;
 import com.mhxify.neural.NeuralNetwork;
 import com.mhxify.neural.XORData;
 
@@ -12,11 +13,18 @@ public class Main {
 
         NeuralNetwork network = new NeuralNetwork();
 
-        network.addLayer(new Layer(2, 2)); // hidden layer
-        network.addLayer(new Layer(2, 1)); // output layer
+        network.addLayer(new Layer(2, 4));
+        network.addLayer(new Layer(4, 1));
+
+        NetworkTrainer.trainXOR(
+                network,
+                0.5,
+                50000
+        );
+
+        System.out.println("--------------------");
 
         for (int i = 0; i < XORData.INPUTS.length; i++) {
-
             double[] prediction = network.forward(XORData.INPUTS[i]);
 
             System.out.println(
