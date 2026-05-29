@@ -8,10 +8,11 @@ import javafx.scene.shape.Circle;
 public class NeuronView extends StackPane {
 
     private final Label valueLabel;
+    private final Circle circle;
 
     public NeuronView(double x, double y) {
 
-        Circle circle = new Circle(25);
+        circle = new Circle(25);
         circle.setFill(Color.WHITE);
         circle.setStroke(Color.DODGERBLUE);
         circle.setStrokeWidth(3);
@@ -26,5 +27,16 @@ public class NeuronView extends StackPane {
 
     public void setValue(double value) {
         valueLabel.setText(String.format("%.2f", value));
+        updateColor(value);
+    }
+
+    private void updateColor(double value) {
+        if (value < 0.3) {
+            circle.setFill(Color.LIGHTGRAY);
+        } else if (value < 0.7) {
+            circle.setFill(Color.LIGHTBLUE);
+        } else {
+            circle.setFill(Color.LIGHTGREEN);
+        }
     }
 }

@@ -12,8 +12,12 @@ import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Line;
 import javafx.stage.Stage;
+import javafx.scene.chart.LineChart;
+import javafx.scene.chart.NumberAxis;
+import javafx.scene.chart.XYChart;
 
 import java.util.ArrayList;
+import com.mhxify.neural.TrainingHistory;
 import java.util.List;
 
 public class VisualizerApp extends Application {
@@ -42,13 +46,20 @@ public class VisualizerApp extends Application {
         network.addLayer(new Layer(2, 4));
         network.addLayer(new Layer(4, 1));
 
-        NetworkTrainer.trainXOR(
-                network,
-                0.5,
-                50000
-        );
+        TrainingHistory history =
+                NetworkTrainer.trainXORWithHistory(
+                        network,
+                        0.5,
+                        50000
+                );
+
+        System.out.println("Loss points: " + history.getLosses().size());
 
         Pane root = new Pane();
+
+        root.getChildren().add(
+                createLossChart(history)
+        );
 
         double inputX = 150;
         double hiddenX = 450;
@@ -188,5 +199,37 @@ public class VisualizerApp extends Application {
         line.setStroke(Color.GRAY);
         line.setStrokeWidth(2);
         return line;
+    }
+
+    private LineChart<Number, Number> createLossChart(TrainingHistory history) {
+
+        NumberAxis xAxis = new NumberAxis();
+        NumberAxis yAxis = new NumberAxis();
+
+        xAxis.setLabel("Training Step");
+        yAxis.setLabel("Loss");
+
+        LineChart<Number, Number> chart = new LineChart<>(xAxis, yAxis);
+        chart.setTitle("Loss During Training");
+
+        chart.setLayoutX(20);
+        chart.setLayoutY(20);
+        chart.setPrefSize(260, 180);
+
+        XYChart.Series<Number, Number> series = new XYChart.Series<>();
+        series.setName("MSE Loss");
+
+        for (int i = 0; i < history.getLosses().size(); i++) {
+            series.getData().add(
+                    new XYChart.Data<>(
+                            i,
+                            history.getLosses().get(i)
+                    )
+            );
+        }
+
+        chart.getData().add(series);
+
+        return chart;
     }
 }
