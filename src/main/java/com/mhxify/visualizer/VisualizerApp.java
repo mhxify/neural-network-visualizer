@@ -4,11 +4,17 @@ import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
-import javafx.scene.shape.Circle;
 import javafx.scene.shape.Line;
 import javafx.stage.Stage;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class VisualizerApp extends Application {
+
+    private final List<NeuronView> inputViews = new ArrayList<>();
+    private final List<NeuronView> hiddenViews = new ArrayList<>();
+    private final List<NeuronView> outputViews = new ArrayList<>();
 
     public static void main(String[] args) {
         launch(args);
@@ -19,7 +25,6 @@ public class VisualizerApp extends Application {
 
         Pane root = new Pane();
 
-        // Positions
         double inputX = 150;
         double hiddenX = 450;
         double outputX = 750;
@@ -28,34 +33,46 @@ public class VisualizerApp extends Application {
         double[] hiddenY = {150, 250, 350, 450};
         double[] outputY = {300};
 
-        // Draw connections: input -> hidden
         for (double iy : inputY) {
             for (double hy : hiddenY) {
                 root.getChildren().add(createLine(inputX, iy, hiddenX, hy));
             }
         }
 
-        // Draw connections: hidden -> output
         for (double hy : hiddenY) {
             for (double oy : outputY) {
                 root.getChildren().add(createLine(hiddenX, hy, outputX, oy));
             }
         }
 
-        // Draw input neurons
         for (double y : inputY) {
-            root.getChildren().add(createNeuron(inputX, y));
+            NeuronView view = new NeuronView(inputX, y);
+            inputViews.add(view);
+            root.getChildren().add(view);
         }
 
-        // Draw hidden neurons
         for (double y : hiddenY) {
-            root.getChildren().add(createNeuron(hiddenX, y));
+            NeuronView view = new NeuronView(hiddenX, y);
+            hiddenViews.add(view);
+            root.getChildren().add(view);
         }
 
-        // Draw output neuron
         for (double y : outputY) {
-            root.getChildren().add(createNeuron(outputX, y));
+            NeuronView view = new NeuronView(outputX, y);
+            outputViews.add(view);
+            root.getChildren().add(view);
         }
+
+        // Test values for now
+        inputViews.get(0).setValue(0.0);
+        inputViews.get(1).setValue(1.0);
+
+        hiddenViews.get(0).setValue(0.72);
+        hiddenViews.get(1).setValue(0.15);
+        hiddenViews.get(2).setValue(0.88);
+        hiddenViews.get(3).setValue(0.32);
+
+        outputViews.get(0).setValue(0.99);
 
         Scene scene = new Scene(root, 900, 600);
 
@@ -69,13 +86,5 @@ public class VisualizerApp extends Application {
         line.setStroke(Color.GRAY);
         line.setStrokeWidth(2);
         return line;
-    }
-
-    private Circle createNeuron(double x, double y) {
-        Circle circle = new Circle(x, y, 25);
-        circle.setFill(Color.WHITE);
-        circle.setStroke(Color.DODGERBLUE);
-        circle.setStrokeWidth(3);
-        return circle;
     }
 }
