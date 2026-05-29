@@ -23,17 +23,7 @@ public class Neuron {
         double sum = bias;
 
         for (int i = 0; i < inputs.length; i++) {
-            double multiplication = inputs[i] * weights[i];
-
-            System.out.println("Step " + i);
-            System.out.println("Input: " + inputs[i]);
-            System.out.println("Weight: " + weights[i]);
-            System.out.println("Input * Weight: " + multiplication);
-            System.out.println("Sum before: " + sum);
-
-            sum += multiplication;
-
-            System.out.println("Sum after: " + sum);
+            sum += inputs[i] * weights[i];
         }
 
         output = sigmoid(sum);

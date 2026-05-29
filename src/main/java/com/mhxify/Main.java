@@ -1,58 +1,35 @@
 package com.mhxify;
 
-import com.mhxify.neural.GradientDescent;
-import com.mhxify.neural.Layer;
-import com.mhxify.neural.LossFunction;
-import com.mhxify.neural.NeuralNetwork;
-
-import java.util.Arrays;
+import com.mhxify.neural.Neuron;
+import com.mhxify.neural.SingleNeuronTrainer;
 
 public class Main {
 
     public static void main(String[] args) {
 
-        // Create neural network
-        NeuralNetwork network = new NeuralNetwork();
+        // Create one neuron with one input
+        Neuron neuron = new Neuron(1);
 
-        // Hidden layer
-        network.addLayer(new Layer(2, 3));
+        // Training data
+        double[] inputs = {1.0};
 
-        // Output layer
-        network.addLayer(new Layer(3, 1));
-
-        // Inputs
-        double[] inputs = {1.0, 0.0};
-
-        // Expected output
+        // We want the neuron to output 1.0
         double expected = 1.0;
 
-        // Forward propagation
-        double[] outputs = network.forward(inputs);
-
-        // Network prediction
-        double predicted = outputs[0];
-
-        // Calculate loss
-        double loss = LossFunction.mse(
+        // Train the neuron
+        SingleNeuronTrainer.train(
+                neuron,
+                inputs,
                 expected,
-                predicted
+                0.1,   // learning rate
+                1000   // epochs
         );
 
-        // Display results
-        System.out.println("Inputs      = " + Arrays.toString(inputs));
-        System.out.println("Expected    = " + expected);
-        System.out.println("Predicted   = " + predicted);
-        System.out.println("Loss        = " + loss);
+        // Final test
+        double finalPrediction = neuron.forward(inputs);
 
-        double weight = 0.5;
-
-        double updated =
-                GradientDescent.updateWeight(
-                        weight,
-                        0.2,
-                        0.1
-                );
-
-        System.out.println(updated);
+        System.out.println("--------------------");
+        System.out.println("Final Prediction = " + finalPrediction);
+        System.out.println("Expected         = " + expected);
     }
 }
