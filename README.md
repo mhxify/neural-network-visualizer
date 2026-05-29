@@ -10,15 +10,15 @@ The goal of this project is not only to use artificial intelligence but also to 
 
 This project is designed to help understand:
 
-- Artificial Neurons
-- Weights
-- Biases
-- Activation Functions
-- Forward Propagation
-- Loss Functions
-- Backpropagation
-- Gradient Descent
-- Neural Network Training
+* Artificial Neurons
+* Weights
+* Biases
+* Activation Functions
+* Forward Propagation
+* Loss Functions
+* Backpropagation
+* Gradient Descent
+* Neural Network Training
 
 Instead of relying on frameworks such as TensorFlow or PyTorch, the neural network will be implemented manually to better understand the underlying concepts.
 
@@ -30,26 +30,28 @@ Instead of relying on frameworks such as TensorFlow or PyTorch, the neural netwo
 
 ### ✅ Completed
 
-- Neuron implementation
-- Random weight initialization
-- Random bias initialization
-- Sigmoid activation function
-- Forward propagation
+* Neuron implementation
+* Random weight initialization
+* Random bias initialization
+* Sigmoid activation function
+* Forward propagation
+* Layer implementation
+* Multi-neuron layer support
+* Neural Network implementation
+* Multi-layer forward propagation
 
 ### 🔄 In Progress
 
-- Layer implementation
+* Loss Function
 
 ### 📋 Planned
 
-- Neural Network implementation
-- Loss calculation
-- Backpropagation
-- Gradient Descent
-- XOR training
-- Visualization system
-- Real-time training graphs
-- Interactive controls
+* Backpropagation
+* Gradient Descent
+* XOR training
+* Visualization system
+* Real-time training graphs
+* Interactive controls
 
 ---
 
@@ -59,12 +61,12 @@ Instead of relying on frameworks such as TensorFlow or PyTorch, the neural netwo
 
 The neuron currently supports:
 
-- Multiple inputs
-- Individual weights for each input
-- Bias value
-- Weighted sum calculation
-- Sigmoid activation function
-- Output generation
+* Multiple inputs
+* Individual weights for each input
+* Bias value
+* Weighted sum calculation
+* Sigmoid activation function
+* Output generation
 
 ### Forward Pass Formula
 
@@ -86,6 +88,84 @@ Weighted Sum
 Sigmoid
    ↓
 Output
+```
+
+---
+
+## Layer
+
+A layer is a collection of neurons that process the same inputs and produce multiple outputs.
+
+Features:
+
+* Multiple neurons
+* Shared input processing
+* Parallel forward propagation
+* Output aggregation
+
+Example:
+
+```text
+Inputs
+   ↓
+Neuron 1
+Neuron 2
+Neuron 3
+   ↓
+Outputs
+```
+
+Example Output:
+
+```text
+[0.49, 0.63, 0.80]
+```
+
+---
+
+## Neural Network
+
+A neural network is a collection of layers connected together.
+
+Features:
+
+* Multiple layers
+* Sequential forward propagation
+* Layer-to-layer communication
+* Final prediction generation
+
+Architecture Example:
+
+```text
+Input Layer
+      ↓
+Hidden Layer
+      ↓
+Output Layer
+```
+
+Data Flow Example:
+
+```text
+Input
+  ↓
+Layer 1
+  ↓
+Layer 2
+  ↓
+Output
+```
+
+Example:
+
+```text
+Input: [1.0, 0.0]
+
+Layer 1 Output:
+[0.49, 0.63, 0.80]
+
+Layer 2 Output:
+[0.34]
 ```
 
 ---
@@ -150,6 +230,22 @@ sigmoid(-10) = 0.000
 
 ---
 
+## Forward Propagation
+
+The process of passing data through the neural network to generate predictions.
+
+```text
+Input
+  ↓
+Layer 1
+  ↓
+Layer 2
+  ↓
+Output
+```
+
+---
+
 # 🏗️ Planned Architecture
 
 ```text
@@ -160,18 +256,15 @@ Hidden Layer
 Output Layer
 ```
 
-Example:
+Extended Architecture:
 
 ```text
 Input Layer
-
-(x1)    (x2)
-  \      /
-   \    /
-   (N1) (N2)
-      \ /
-      (N3)
-
+      ↓
+Hidden Layer 1
+      ↓
+Hidden Layer 2
+      ↓
 Output Layer
 ```
 
@@ -181,14 +274,16 @@ Output Layer
 
 The final application will visualize:
 
-- Neurons
-- Connections
-- Weights
-- Forward propagation
-- Backpropagation
-- Gradient flow
-- Loss reduction
-- Training progress
+* Neurons
+* Connections
+* Weights
+* Biases
+* Forward propagation
+* Backpropagation
+* Gradient flow
+* Loss reduction
+* Training progress
+* Decision boundaries
 
 Example:
 
@@ -202,45 +297,49 @@ with real-time animations.
 
 # 🛠️ Tech Stack
 
-- Java
-- Maven
-- JavaFX (planned)
-- Object-Oriented Programming
+* Java
+* Maven
+* JavaFX (planned)
+* Object-Oriented Programming
 
 ---
 
 # 📅 Roadmap
 
-## Phase 1
+## Phase 1: Foundations
 
-- [x] Neuron
-- [ ] Layer
-- [ ] Neural Network
+* [x] Neuron
+* [x] Layer
+* [x] Neural Network
 
-## Phase 2
+## Phase 2: Learning Mechanics
 
-- [ ] Loss Function
-- [ ] Gradient Descent
-- [ ] Backpropagation
+* [ ] Loss Function
+* [ ] Gradient Descent
+* [ ] Backpropagation
 
-## Phase 3
+## Phase 3: Training
 
-- [ ] XOR Training
-- [ ] Dataset Support
-- [ ] Accuracy Tracking
+* [ ] XOR Training
+* [ ] Dataset Support
+* [ ] Accuracy Tracking
+* [ ] Model Evaluation
 
-## Phase 4
+## Phase 4: Visualization
 
-- [ ] JavaFX Visualization
-- [ ] Weight Visualization
-- [ ] Loss Graph
-- [ ] Interactive Training Controls
+* [ ] JavaFX Visualization
+* [ ] Weight Visualization
+* [ ] Loss Graph
+* [ ] Forward Propagation Animation
+* [ ] Backpropagation Animation
+* [ ] Interactive Training Controls
 
-## Phase 5
+## Phase 5: Advanced Topics
 
-- [ ] CNN Visualizer
-- [ ] Transformer Visualizer
-- [ ] Attention Visualization
+* [ ] CNN Visualizer
+* [ ] Transformer Visualizer
+* [ ] Attention Visualization
+* [ ] Custom Dataset Import
 
 ---
 
@@ -248,11 +347,13 @@ with real-time animations.
 
 By the end of this project, the goal is to fully understand:
 
-- How neurons work
-- How neural networks make predictions
-- How errors are calculated
-- How weights are updated
-- How learning actually happens inside AI systems
+* How neurons work
+* How layers process information
+* How neural networks make predictions
+* How errors are calculated
+* How gradients are computed
+* How weights are updated
+* How learning actually happens inside AI systems
 
 This project focuses on understanding AI fundamentals rather than simply using existing AI libraries.
 
